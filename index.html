@@ -446,9 +446,28 @@
         min-height: calc(86vh - 132px);
       }
       .hero-actions { justify-content: center; }
-      .hero, .section-inner { width: 100%; }
-      .focus-item { min-height: 190px; }
-      .metric { min-height: 118px; }
+      .section-inner {
+        width: calc(100% - 48px);
+        padding: 64px 0;
+      }
+      .lead,
+      .body-copy {
+        max-width: 31rem;
+      }
+      .metric {
+        min-height: 118px;
+        padding: 22px;
+      }
+      .focus-item {
+        min-height: 190px;
+        padding: 24px 22px;
+      }
+      .principle {
+        padding: 24px 22px;
+      }
+      footer {
+        width: calc(100% - 48px);
+      }
     }
   </style>
 </head>
