@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Field Notes · Atarax Capital</title>
+<meta name="theme-color" content="#000000" />
+<meta name="description" content="Field notes from Atarax Capital: a working record of regime, process and systematic-trading decisions." />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#000000; --ink-2:#08080a; --panel:#0e0e11;
+    --line:rgba(255,255,255,.10); --line-2:rgba(255,255,255,.18);
+    --txt:#ffffff; --muted:#bcc0c8; --faint:#7d818b;
+    --silver:#c8ccd2; --silver-soft:#eef0f3;
+    --metal:linear-gradient(105deg,#7f828a 0%,#c4c7cd 13%,#ffffff 25%,#9a9ea6 39%,#e6e8eb 53%,#b6b9c0 67%,#ffffff 80%,#888b92 100%);
+    --serif:'Cormorant Garamond',Georgia,serif;
+    --sans:'Inter',-apple-system,Segoe UI,sans-serif;
+    --max:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--txt);font-family:var(--sans);font-weight:400;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+  .eyebrow{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--silver);font-weight:500}
+
+  .metal{background:var(--metal);background-size:220% auto;
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    animation:sheen 9s linear infinite}
+  @keyframes sheen{to{background-position:220% center}}
+
+  .mark{position:relative;display:inline-block;line-height:0;overflow:hidden}
+  .mark img{display:block;width:100%;height:auto}
+  .mark::after{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;
+    background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.72) 50%,transparent 62%);
+    background-size:250% 100%;background-repeat:no-repeat;
+    -webkit-mask-image:url(ac-mark.png);mask-image:url(ac-mark.png);
+    -webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    animation:glare 6.5s ease-in-out infinite}
+  @keyframes glare{0%{background-position:-120% 0}55%{background-position:220% 0}100%{background-position:220% 0}}
+
+  #prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;background:linear-gradient(90deg,var(--silver-soft),var(--silver))}
+
+  header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:rgba(0,0,0,.7);border-bottom:1px solid var(--line)}
+  header nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand .mark{width:44px}
+  .brandtext{font-family:var(--serif);font-weight:600;letter-spacing:.2em;font-size:17px}
+  .links{display:flex;gap:36px;align-items:center}
+  .links a{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .25s;position:relative}
+  .links a:not(.cta):hover{color:var(--txt)}
+  .links a.here{color:var(--silver)}
+  .links a:not(.cta)::after{content:"";position:absolute;left:0;bottom:-6px;height:1px;width:0;background:var(--silver);transition:width .28s cubic-bezier(.2,.7,.2,1)}
+  .links a:not(.cta):hover::after{width:100%}
+  .links .cta{color:#0a0a0c;background:var(--metal);background-size:220% auto;padding:10px 20px;border-radius:2px;letter-spacing:.1em;font-weight:600;animation:sheen 9s linear infinite}
+  .links .cta:hover{filter:brightness(1.07)}
+  .burger{display:none;background:none;border:0;color:var(--txt);font-size:24px;cursor:pointer}
+
+  .note-head{padding:clamp(48px,9vw,96px) 0 0}
+  .note-head h1{font-family:var(--serif);font-weight:500;font-size:clamp(38px,7vw,72px);line-height:1.04;margin:16px 0 0}
+  .note-head .lede{color:var(--muted);font-weight:300;max-width:600px;margin-top:18px;font-size:clamp(15px,1.8vw,18px)}
+
+  .notes-wrap{display:grid;grid-template-columns:300px 1fr;gap:64px;align-items:start;padding:clamp(40px,6vw,72px) 0 clamp(60px,9vw,110px)}
+  .note-index{position:sticky;top:104px;border-top:1px solid var(--line)}
+  .note-link{display:block;padding:16px 2px;border-bottom:1px solid var(--line);transition:padding .25s}
+  .note-link:hover{padding-left:10px}
+  .note-link .d{color:var(--faint);font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+  .note-link .t{color:var(--txt);font-family:var(--serif);font-size:18px;line-height:1.2;margin-top:4px;display:block}
+  .note-link.active .t{color:var(--silver)}
+
+  .note-view{min-width:0;max-width:720px}
+  .note-meta{color:var(--faint);font-size:12px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:18px}
+  .note-view h1{font-family:var(--serif);font-weight:500;font-size:clamp(28px,4.6vw,46px);line-height:1.08;margin:0 0 8px}
+  .note-view h2{font-family:var(--serif);font-weight:500;font-size:clamp(22px,3vw,30px);margin:38px 0 14px}
+  .note-view h3{font-family:var(--serif);font-size:22px;margin:28px 0 10px}
+  .note-view p{color:var(--muted);font-weight:300;font-size:17px;margin:0 0 20px;line-height:1.85}
+  .note-view a{color:var(--silver);text-decoration:underline;text-underline-offset:3px}
+  .note-view strong{color:var(--txt);font-weight:600}
+  .note-view em{color:var(--txt)}
+  .note-view ul,.note-view ol{color:var(--muted);font-weight:300;font-size:17px;margin:0 0 20px 22px;line-height:1.85}
+  .note-view li{margin:8px 0}
+  .note-view blockquote{border-left:2px solid var(--silver);margin:24px 0;padding:6px 0 6px 22px;color:var(--txt);font-family:var(--serif);font-style:italic;font-size:21px;line-height:1.4}
+  .note-view code{background:var(--ink-2);border:1px solid var(--line);border-radius:3px;padding:2px 7px;font-size:14px;font-family:ui-monospace,Menlo,Consolas,monospace}
+  .note-view pre{background:var(--ink-2);border:1px solid var(--line);border-radius:6px;padding:18px;overflow:auto;margin:0 0 22px}
+  .note-view pre code{background:none;border:0;padding:0}
+  .note-view hr{border:0;border-top:1px solid var(--line);margin:34px 0}
+
+  footer{padding:60px 0 40px;background:var(--ink);border-top:1px solid var(--line)}
+  .foot-top{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-end;border-bottom:1px solid var(--line);padding-bottom:30px}
+  .foot-top .fb{font-family:var(--serif);font-weight:600;letter-spacing:.2em;font-size:19px}
+  .motto{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.4vw,22px);color:var(--silver);letter-spacing:.03em;margin-top:30px}
+  .disc{color:var(--faint);font-size:12px;font-weight:300;line-height:1.7;max-width:880px;margin-top:22px}
+  .copy{color:var(--muted);font-size:12px;letter-spacing:.1em;margin-top:24px}
+
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  @media(max-width:860px){
+    .notes-wrap{grid-template-columns:1fr;gap:24px}
+    .note-index{position:static}
+    .note-view{max-width:none}
+  }
+  @media(max-width:760px){
+    .links{position:absolute;top:74px;left:0;right:0;background:var(--ink-2);border-bottom:1px solid var(--line);flex-direction:column;gap:0;height:0;overflow:hidden;transition:height .3s}
+    .links.open{height:auto;padding:8px 0 18px}
+    .links a{padding:14px 28px;width:100%;font-size:15px}
+    .links .cta{margin:10px 28px 0;text-align:center}
+    .burger{display:block}
+    .brandtext{font-size:15px}
+  }
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<header>
+  <nav class="wrap">
+    <a href="index.html" class="brand">
+      <span class="mark" aria-hidden="true"><img src="ac-mark.png" alt="" /></span>
+      <span class="brandtext metal">ATARAX CAPITAL</span>
+    </a>
+    <button class="burger" aria-label="Menu" id="burger"><i>≡</i></button>
+    <div class="links" id="links">
+      <a href="index.html#approach">Approach</a>
+      <a href="index.html#strategy">Strategy</a>
+      <a href="index.html#process">Process</a>
+      <a href="notes.html" class="here">Notes</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact" class="cta">Inquire</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap note-head">
+    <span class="eyebrow">Field Notes</span>
+    <h1>Notes from the desk.</h1>
+    <p class="lede">A working record of regime, process and decisions. Not forecasts. We trade systems, not sentiment.</p>
+  </div>
+
+  <div class="wrap notes-wrap">
+    <nav class="note-index" id="index" aria-label="Notes"></nav>
+    <article class="note-view" id="view"><p style="color:var(--faint)">Loading notes…</p></article>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <span class="fb metal">ATARAX CAPITAL</span>
+      <span class="eyebrow">Established 2025 &nbsp;·&nbsp; Paris</span>
+    </div>
+    <p class="motto">For Jiwon, By Jiwon</p>
+    <p class="disc">Atarax Capital is a private systematic trading operation. Nothing on this site constitutes investment advice, research, or an offer or solicitation to buy or sell any financial instrument or to participate in any trading strategy. Figures shown are illustrative of internal research and do not represent actual client trading results. Trading futures involves substantial risk of loss. Past performance is not indicative of future results.</p>
+    <p class="copy">© 2025 Atarax Capital. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script>
+  var burger=document.getElementById('burger'),links=document.getElementById('links');
+  burger.addEventListener('click',function(){links.classList.toggle('open')});
+  var prog=document.getElementById('prog');
+  window.addEventListener('scroll',function(){var h=document.documentElement;var max=h.scrollHeight-h.clientHeight;prog.style.width=(max>0?(h.scrollTop/max*100):0)+'%'},{passive:true});
+
+  var indexEl=document.getElementById('index');
+  var viewEl=document.getElementById('view');
+  var posts=[];
+
+  function slug(file){return file.replace(/\.md$/,'');}
+
+  function buildIndex(){
+    indexEl.innerHTML=posts.map(function(p){
+      return '<a class="note-link" href="#'+slug(p.file)+'" data-file="'+p.file+'">'
+           + '<span class="d">'+(p.date||'')+'</span>'
+           + '<span class="t">'+p.title+'</span></a>';
+    }).join('');
+  }
+
+  function setActive(file){
+    var as=indexEl.querySelectorAll('.note-link');
+    for(var i=0;i<as.length;i++){ as[i].classList.toggle('active', as[i].getAttribute('data-file')===file); }
+  }
+
+  function renderNote(file){
+    fetch('notes/'+file,{cache:'no-store'}).then(function(r){
+      if(!r.ok) throw new Error(r.status); return r.text();
+    }).then(function(md){
+      viewEl.innerHTML=window.marked.parse(md,{breaks:true});
+      var p=posts.filter(function(x){return x.file===file;})[0];
+      if(p && p.date){
+        var m=document.createElement('div'); m.className='note-meta'; m.textContent=p.date;
+        viewEl.insertBefore(m, viewEl.firstChild);
+      }
+      setActive(file);
+      window.scrollTo({top:0,behavior:'auto'});
+    }).catch(function(){ viewEl.innerHTML='<p>Could not load this note.</p>'; });
+  }
+
+  function currentFile(){
+    var h=decodeURIComponent(location.hash.replace(/^#/,''));
+    for(var i=0;i<posts.length;i++){ if(slug(posts[i].file)===h) return posts[i].file; }
+    return posts.length?posts[0].file:null;
+  }
+
+  fetch('notes/posts.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(data){
+    posts=data||[];
+    if(!posts.length){ viewEl.innerHTML='<p style="color:var(--faint)">No notes yet.</p>'; return; }
+    buildIndex();
+    renderNote(currentFile());
+    window.addEventListener('hashchange',function(){ renderNote(currentFile()); });
+  }).catch(function(){ viewEl.innerHTML='<p>Could not load notes.</p>'; });
+</script>
+</body>
+</html>

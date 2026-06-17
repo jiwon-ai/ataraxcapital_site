@@ -1,664 +1,316 @@
-﻿<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Atarax Capital | For Jiwon By Jiwon</title>
-  <meta name="description" content="Atarax Capital is a systematic macro investment firm built around disciplined research, risk management, and global market signals." />
-  <style>
-    :root {
-      --ink: #f3f1ea;
-      --muted: #b8b4aa;
-      --soft: #858177;
-      --line: rgba(238, 234, 220, 0.16);
-      --panel: rgba(21, 22, 21, 0.78);
-      --panel-strong: rgba(14, 15, 14, 0.92);
-      --silver: #d8d6ce;
-      --steel: #8e908b;
-      --accent: #c8b886;
-      --deep: #090a09;
-      --charcoal: #151615;
-      --forest: #1e2a24;
-      --oxblood: #3a1d1b;
-      --max: 1180px;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Atarax Capital · Systematic Macro Investments</title>
+<meta name="theme-color" content="#000000" />
+<meta name="description" content="Atarax Capital is a private quantitative trading firm building uncorrelated, systematically validated strategies in global futures markets." />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#000000; --ink-2:#08080a; --panel:#0e0e11;
+    --line:rgba(255,255,255,.10); --line-2:rgba(255,255,255,.18);
+    --txt:#ffffff; --muted:#bcc0c8; --faint:#7d818b;
+    --silver:#c8ccd2; --silver-soft:#eef0f3;
+    --metal:linear-gradient(105deg,#7f828a 0%,#c4c7cd 13%,#ffffff 25%,#9a9ea6 39%,#e6e8eb 53%,#b6b9c0 67%,#ffffff 80%,#888b92 100%);
+    --serif:'Cormorant Garamond',Georgia,serif;
+    --sans:'Inter',-apple-system,Segoe UI,sans-serif;
+    --max:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--txt);font-family:var(--sans);font-weight:400;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+  .eyebrow{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--silver);font-weight:500}
+  h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.08;letter-spacing:.005em}
 
-    * { box-sizing: border-box; }
+  /* metallic silver treatment (shiny) */
+  .metal{background:var(--metal);background-size:220% auto;
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+    animation:sheen 9s linear infinite}
+  @keyframes sheen{to{background-position:220% center}}
 
-    html {
-      scroll-behavior: smooth;
-      background: var(--deep);
-    }
+  /* AC monogram — metal emblem image + CSS shine sweep */
+  .mark{position:relative;display:inline-block;line-height:0;overflow:hidden}
+  .mark img{display:block;width:100%;height:auto}
+  .mark::after{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;
+    background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.72) 50%,transparent 62%);
+    background-size:250% 100%;background-repeat:no-repeat;
+    -webkit-mask-image:url(ac-mark.png);mask-image:url(ac-mark.png);
+    -webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    animation:glare 6.5s ease-in-out infinite}
+  @keyframes glare{0%{background-position:-120% 0}55%{background-position:220% 0}100%{background-position:220% 0}}
 
-    body {
-      margin: 0;
-      color: var(--ink);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at 18% 12%, rgba(200, 184, 134, 0.08), transparent 26rem),
-        radial-gradient(circle at 88% 38%, rgba(58, 29, 27, 0.18), transparent 26rem),
-        linear-gradient(135deg, #080908 0%, #171817 52%, #0b0c0b 100%);
-      line-height: 1.5;
-    }
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
 
-    a { color: inherit; text-decoration: none; }
+  /* nav */
+  header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:rgba(0,0,0,.7);border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand .mark{width:44px}
+  .brandtext{font-family:var(--serif);font-weight:600;letter-spacing:.2em;font-size:17px}
+  .links{display:flex;gap:38px;align-items:center}
+  .links a{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .25s;position:relative}
+  .links a:not(.cta):hover{color:var(--txt)}
+  .links a:not(.cta)::after{content:"";position:absolute;left:0;bottom:-6px;height:1px;width:0;background:var(--silver);transition:width .28s cubic-bezier(.2,.7,.2,1)}
+  .links a:not(.cta):hover::after{width:100%}
+  .links .cta{color:#0a0a0c;background:var(--metal);background-size:220% auto;padding:10px 20px;border-radius:2px;letter-spacing:.1em;font-weight:600;animation:sheen 9s linear infinite}
+  .links .cta:hover{filter:brightness(1.07)}
+  .burger{display:none;background:none;border:0;color:var(--txt);font-size:24px;cursor:pointer}
 
-    .site-header {
-      position: fixed;
-      z-index: 20;
-      top: 0;
-      left: 0;
-      right: 0;
-      border-bottom: 1px solid rgba(238, 234, 220, 0.1);
-      background: rgba(9, 10, 9, 0.72);
-      backdrop-filter: blur(18px);
-    }
+  /* hero */
+  .hero{position:relative;min-height:94vh;display:flex;align-items:center;border-bottom:1px solid var(--line);
+    background:radial-gradient(120% 90% at 78% -10%,rgba(202,207,214,.10),transparent 55%),linear-gradient(180deg,var(--ink),var(--ink-2))}
+  .hero::before{content:"";position:absolute;inset:0;opacity:.45;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:64px 64px;-webkit-mask-image:radial-gradient(70% 60% at 50% 40%,#000,transparent 80%);mask-image:radial-gradient(70% 60% at 50% 40%,#000,transparent 80%)}
+  .hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(38% 40% at 66% 30%,rgba(202,207,214,.10),transparent 70%);
+    animation:drift 18s ease-in-out infinite alternate}
+  @keyframes drift{from{transform:translate(0,0)}to{transform:translate(-6%,5%)}}
+  .hero .wrap{position:relative;z-index:2;padding-top:40px;padding-bottom:64px;opacity:0;transform:translateY(20px);animation:riseIn 1s cubic-bezier(.2,.7,.2,1) .1s forwards}
+  @keyframes riseIn{to{opacity:1;transform:none}}
+  .hero .mark{display:block;width:clamp(190px,27vw,300px);animation:floaty 6.5s ease-in-out infinite}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+  .hero .wordmark{display:inline-block;font-family:var(--serif);font-weight:500;letter-spacing:.2em;font-size:clamp(26px,4.6vw,50px);margin-top:22px}
+  .hero .rule{width:230px;max-width:62%;height:1px;background:linear-gradient(90deg,var(--silver),transparent);opacity:.6;margin:24px 0}
+  .hero .lede{max-width:600px;color:var(--muted);font-size:clamp(16px,2vw,20px);margin-top:8px;font-weight:300}
+  .hero .actions{display:flex;gap:18px;align-items:center;margin-top:40px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;padding:14px 26px;border-radius:2px;transition:transform .25s,filter .25s,border-color .25s,color .25s}
+  .btn-metal{background:var(--metal);background-size:220% auto;color:#0a0a0c;font-weight:600;animation:sheen 9s linear infinite}
+  .btn-metal:hover{transform:translateY(-2px);filter:brightness(1.07)}
+  .btn-ghost{border:1px solid var(--line-2);color:var(--txt)}
+  .btn-ghost:hover{border-color:var(--silver);color:var(--silver);transform:translateY(-2px)}
+  .scrollcue{position:absolute;bottom:28px;left:50%;color:var(--faint);font-size:18px;z-index:2;text-decoration:none;animation:bob 2.4s ease-in-out infinite}
+  .scrollcue:hover{color:var(--silver)}
+  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
 
-    .nav {
-      width: min(var(--max), calc(100% - 40px));
-      min-height: 72px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-    }
+  /* ataraxia strip */
+  .strip{border-bottom:1px solid var(--line);background:var(--ink-2)}
+  .strip .wrap{padding:54px 28px}
+  .strip p{font-family:var(--serif);font-style:italic;font-size:clamp(22px,3.4vw,34px);color:var(--txt);max-width:880px;line-height:1.35}
+  .strip .key{color:var(--silver);font-style:normal;letter-spacing:.06em}
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 210px;
-    }
+  /* sections */
+  section.block{padding:clamp(70px,11vw,128px) 0;border-bottom:1px solid var(--line)}
+  .lab{display:flex;align-items:center;gap:14px;margin-bottom:30px}
+  .lab .n{font-size:12px;letter-spacing:.3em;color:var(--faint)}
+  .lab .t{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--silver);font-weight:500}
+  .h-lead{font-size:clamp(30px,5vw,54px);max-width:780px}
+  .sub{color:var(--muted);max-width:640px;margin-top:22px;font-weight:300;font-size:17px}
 
-    .brand-mark {
-      width: 34px;
-      height: 34px;
-      object-fit: cover;
-      border-radius: 2px;
-      filter: saturate(0.75) contrast(1.08);
-    }
+  .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:54px}
+  .cell{background:var(--ink);padding:38px 32px}
+  .cell .ic{color:var(--silver);font-size:26px}
+  .cell h3{font-size:25px;margin:18px 0 12px}
+  .cell p{color:var(--muted);font-weight:300;font-size:15px}
 
-    .brand-name {
-      font-family: Georgia, "Times New Roman", serif;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-size: 14px;
-      white-space: nowrap;
-    }
+  /* process list */
+  .proc{margin-top:50px;border-top:1px solid var(--line)}
+  .proc .row{display:grid;grid-template-columns:80px 1fr auto;gap:24px;align-items:center;padding:26px 4px;border-bottom:1px solid var(--line);transition:.3s}
+  .proc .row:hover{padding-left:16px;background:linear-gradient(90deg,rgba(202,207,214,.06),transparent)}
+  .proc .row .num{font-family:var(--serif);font-size:28px;color:var(--silver)}
+  .proc .row .name{font-size:19px;font-family:var(--serif);color:var(--txt)}
+  .proc .row .desc{color:var(--muted);font-size:14px;font-weight:300;max-width:520px;text-align:right}
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 26px;
-      color: var(--muted);
-      font-size: 13px;
-    }
+  /* stats */
+  .stats{background:var(--panel)}
+  .statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+  .stat{background:var(--panel);padding:46px 28px;text-align:center}
+  .stat .v{font-family:var(--serif);font-size:clamp(40px,6vw,64px);line-height:1;
+    background:var(--metal);background-size:220% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:sheen 11s linear infinite}
+  .stat .l{margin-top:14px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
 
-    .nav-links a:hover { color: var(--ink); }
+  /* about + contact two col */
+  .twocol{display:grid;grid-template-columns:1.1fr .9fr;gap:70px;align-items:start}
+  .about p{color:var(--muted);font-weight:300;margin-top:20px;font-size:16px}
+  .contact{background:var(--ink-2);border:1px solid var(--line);border-radius:3px;padding:40px 36px}
+  .contact h3{font-size:26px}
+  .contact .item{margin-top:22px}
+  .contact .item .k{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint)}
+  .contact .item .val{font-size:17px;margin-top:6px;color:var(--txt)}
+  .contact .item .val a:hover{color:var(--silver)}
 
-    .contact-link {
-      border: 1px solid var(--line);
-      padding: 10px 14px;
-      color: var(--ink);
-      background: rgba(255, 255, 255, 0.02);
-    }
+  /* footer */
+  footer{padding:64px 0 40px;background:var(--ink)}
+  .foot-top{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:flex-end;border-bottom:1px solid var(--line);padding-bottom:30px}
+  .foot-top .fb{font-family:var(--serif);font-weight:600;letter-spacing:.2em;font-size:19px}
+  .disc{color:var(--faint);font-size:12px;font-weight:300;line-height:1.7;max-width:880px;margin-top:26px}
+  .copy{color:var(--muted);font-size:12px;letter-spacing:.1em;margin-top:24px}
+  .motto{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.4vw,22px);color:var(--silver);letter-spacing:.03em;margin-top:30px}
 
-    .hero {
-      min-height: 92vh;
-      position: relative;
-      display: grid;
-      align-items: end;
-      padding: 112px 0 46px;
-      overflow: hidden;
-      border-bottom: 1px solid var(--line);
-    }
+  /* scroll progress */
+  #prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;background:linear-gradient(90deg,var(--silver-soft),var(--silver))}
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(90deg, rgba(9,10,9,0.66) 0%, rgba(9,10,9,0.18) 36%, rgba(9,10,9,0.26) 100%),
-        linear-gradient(0deg, rgba(9,10,9,0.92) 0%, rgba(9,10,9,0.08) 42%, rgba(9,10,9,0.6) 100%),
-        url("assets/atarax-capital-door-logo.png") center / cover no-repeat;
-      opacity: 0.98;
-    }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .reveal{opacity:1!important;transform:none!important}
+    .hero .wrap{opacity:1!important;transform:none!important}
+  }
 
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 72px 0 0;
-      background:
-        linear-gradient(0deg, rgba(9,10,9,0.94) 0%, rgba(9,10,9,0.18) 26%, transparent 58%);
-      pointer-events: none;
-    }
-
-    .hero-inner {
-      position: relative;
-      z-index: 1;
-      width: min(var(--max), calc(100% - 40px));
-      margin: 0 auto;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 36px;
-    }
-
-    .hero-content {
-      max-width: 520px;
-    }
-
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
-    .eyebrow {
-      color: var(--accent);
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      font-size: 12px;
-      margin-bottom: 0;
-    }
-
-    h1 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(56px, 9vw, 124px);
-      line-height: 0.92;
-      letter-spacing: 0;
-      margin: 0;
-      font-weight: 400;
-    }
-
-    .hero-copy {
-      max-width: 420px;
-      margin: 14px 0 0;
-      color: var(--muted);
-      font-size: clamp(16px, 1.7vw, 18px);
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 22px;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 46px;
-      padding: 0 18px;
-      border: 1px solid rgba(238, 234, 220, 0.22);
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .button.primary {
-      background: var(--ink);
-      color: #111;
-      border-color: var(--ink);
-    }
-
-    .button:hover { transform: translateY(-1px); }
-
-    .hero-note {
-      justify-self: end;
-      width: min(100%, 310px);
-      border-left: 1px solid var(--line);
-      padding-left: 24px;
-      color: var(--soft);
-      font-size: 14px;
-    }
-
-    main section {
-      border-bottom: 1px solid var(--line);
-    }
-
-    .section-inner {
-      width: min(var(--max), calc(100% - 40px));
-      margin: 0 auto;
-      padding: 92px 0;
-    }
-
-    .split {
-      display: grid;
-      grid-template-columns: 0.82fr 1.18fr;
-      gap: 72px;
-      align-items: start;
-    }
-
-    .section-label {
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.24em;
-      font-size: 12px;
-    }
-
-    h2 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(34px, 5vw, 64px);
-      line-height: 1.02;
-      letter-spacing: 0;
-      font-weight: 400;
-      margin: 16px 0 0;
-    }
-
-    .lead {
-      color: var(--muted);
-      font-size: clamp(19px, 2.2vw, 25px);
-      margin: 0 0 30px;
-    }
-
-    .body-copy {
-      color: var(--muted);
-      max-width: 720px;
-      font-size: 16px;
-    }
-
-    .metrics {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--line);
-      margin-top: 42px;
-    }
-
-    .metric {
-      min-height: 142px;
-      padding: 24px;
-      background: rgba(12, 13, 12, 0.74);
-    }
-
-    .metric strong {
-      display: block;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 34px;
-      font-weight: 400;
-      color: var(--silver);
-    }
-
-    .metric span {
-      display: block;
-      margin-top: 12px;
-      color: var(--soft);
-      font-size: 13px;
-    }
-
-    .focus-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--line);
-      margin-top: 42px;
-    }
-
-    .system {
-      background: linear-gradient(135deg, rgba(30,42,36,0.32), rgba(9,10,9,0.94) 48%, rgba(58,29,27,0.2));
-    }
-
-    .system-panel {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      margin-top: 42px;
-      background: var(--line);
-    }
-
-    .system-copy {
-      min-height: 270px;
-      padding: 32px;
-      background: rgba(11, 12, 11, 0.82);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .system-copy p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 16px;
-    }
-
-    .system-kicker {
-      color: var(--accent);
-      font-size: 12px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-    }
-
-    .system-line {
-      display: grid;
-      gap: 1px;
-      background: var(--line);
-    }
-
-    .system-line span {
-      display: block;
-      padding: 22px 26px;
-      background: rgba(17, 18, 17, 0.9);
-      color: var(--silver);
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 24px;
-    }
-
-    .focus-item {
-      background: linear-gradient(180deg, rgba(25, 26, 24, 0.9), rgba(12, 13, 12, 0.9));
-      min-height: 230px;
-      padding: 26px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .focus-item h3 {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-weight: 400;
-      font-size: 24px;
-    }
-
-    .focus-item p {
-      margin: 24px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .number {
-      color: var(--accent);
-      font-size: 12px;
-      letter-spacing: 0.18em;
-    }
-
-    .principles {
-      background:
-        linear-gradient(rgba(9,10,9,0.86), rgba(9,10,9,0.92)),
-        url("assets/atarax-ac-mark.jpeg") center / cover no-repeat;
-    }
-
-    .principle-list {
-      display: grid;
-      gap: 1px;
-      background: var(--line);
-    }
-
-    .principle {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 28px;
-      padding: 28px;
-      background: rgba(10, 11, 10, 0.76);
-    }
-
-    .principle h3 {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-weight: 400;
-      font-size: 25px;
-    }
-
-    .principle p {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .contact {
-      background: linear-gradient(135deg, rgba(30,42,36,0.42), rgba(9,10,9,0.98) 48%, rgba(58,29,27,0.26));
-    }
-
-    .contact-box {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 28px;
-      align-items: end;
-      padding: 42px 0 10px;
-    }
-
-    .email {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(26px, 4vw, 48px);
-      color: var(--silver);
-      overflow-wrap: anywhere;
-    }
-
-    footer {
-      width: min(var(--max), calc(100% - 40px));
-      margin: 0 auto;
-      padding: 28px 0 36px;
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      color: var(--soft);
-      font-size: 13px;
-    }
-
-    @media (max-width: 880px) {
-      .nav { width: min(100% - 28px, var(--max)); }
-      .nav-links a:not(.contact-link) { display: none; }
-      .hero { min-height: 88vh; }
-      .hero::before {
-        background:
-          linear-gradient(0deg, rgba(9,10,9,0.98) 0%, rgba(9,10,9,0.5) 52%, rgba(9,10,9,0.92) 100%),
-          url("assets/atarax-ac-mark.jpeg") center 30% / min(78vw, 430px) auto no-repeat;
-        opacity: 1;
-      }
-      .hero-inner {
-        min-height: calc(88vh - 158px);
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-end;
-        text-align: center;
-        padding-bottom: 10px;
-      }
-      .hero-content { max-width: 340px; }
-      .split, .contact-box {
-        grid-template-columns: 1fr;
-      }
-      .hero-note {
-        justify-self: start;
-        width: 100%;
-        padding-left: 18px;
-      }
-      .section-inner { padding: 72px 0; }
-      .metrics, .focus-grid, .system-panel { grid-template-columns: 1fr; }
-      .principle { grid-template-columns: 1fr; }
-      footer { flex-direction: column; }
-    }
-
-    @media (max-width: 520px) {
-      .brand-name { font-size: 12px; letter-spacing: 0.12em; }
-      .contact-link { padding: 9px 10px; }
-      .nav { gap: 12px; }
-      .brand { min-width: 0; gap: 10px; }
-      .brand-mark { width: 30px; height: 30px; }
-      .hero {
-        min-height: 86vh;
-        padding: 98px 0 34px;
-      }
-      .hero::before {
-        background:
-          linear-gradient(0deg, rgba(9,10,9,0.98) 0%, rgba(9,10,9,0.44) 54%, rgba(9,10,9,0.92) 100%),
-          url("assets/atarax-ac-mark.jpeg") center 31% / min(82vw, 340px) auto no-repeat;
-      }
-      .hero-inner {
-        width: min(100% - 32px, var(--max));
-        min-height: calc(86vh - 132px);
-      }
-      .hero-actions { justify-content: center; }
-      .section-inner {
-        width: calc(100% - 48px);
-        padding: 64px 0;
-      }
-      .lead,
-      .body-copy {
-        max-width: 31rem;
-      }
-      .metric {
-        min-height: 118px;
-        padding: 22px;
-      }
-      .focus-item {
-        min-height: 190px;
-        padding: 24px 22px;
-      }
-      .system-copy {
-        min-height: 230px;
-        padding: 24px 22px;
-      }
-      .system-line span {
-        padding: 20px 22px;
-        font-size: 22px;
-      }
-      .principle {
-        padding: 24px 22px;
-      }
-      footer {
-        width: calc(100% - 48px);
-      }
-    }
-  </style>
+  @media(max-width:760px){
+    .links{position:absolute;top:74px;left:0;right:0;background:var(--ink-2);border-bottom:1px solid var(--line);flex-direction:column;gap:0;height:0;overflow:hidden;transition:height .3s}
+    .links.open{height:auto;padding:8px 0 18px}
+    .links a{padding:14px 28px;width:100%;font-size:15px}
+    .links .cta{margin:10px 28px 0;text-align:center}
+    .burger{display:block}
+    .brandtext{font-size:15px}
+    .twocol{grid-template-columns:1fr;gap:40px}
+    .proc .row{grid-template-columns:48px 1fr;gap:14px}
+    .proc .row .desc{display:none}
+    .scrollcue{display:none}
+  }
+</style>
 </head>
 <body>
-  <header class="site-header">
-    <nav class="nav" aria-label="Main navigation">
-      <a class="brand" href="#top" aria-label="Atarax Capital home">
-        <img class="brand-mark" src="assets/atarax-ac-mark.jpeg" alt="Atarax Capital AC mark" />
-        <span class="brand-name">Atarax Capital</span>
-      </a>
-      <div class="nav-links">
-        <a href="#firm">Firm</a>
-        <a href="#focus">Focus</a>
-        <a href="#system">System</a>
-        <a href="#principles">Principles</a>
-        <a class="contact-link" href="mailto:contact@ataraxcapital.com">Contact</a>
-      </div>
-    </nav>
-  </header>
+<div id="prog"></div>
 
-  <section class="hero" id="top">
-    <div class="hero-inner">
-      <div class="hero-content">
-        <h1 class="sr-only">Atarax Capital</h1>
-        <div class="eyebrow">For Jiwon By Jiwon</div>
-        <p class="hero-copy">Disciplined macro investing.</p>
-        <div class="hero-actions">
-          <a class="button primary" href="#firm">View Firm</a>
-          <a class="button" href="mailto:contact@ataraxcapital.com">Contact</a>
+<header>
+  <nav class="wrap">
+    <a href="#top" class="brand">
+      <span class="mark" aria-hidden="true"><img src="ac-mark.png" alt="" /></span>
+      <span class="brandtext metal">ATARAX CAPITAL</span>
+    </a>
+    <button class="burger" aria-label="Menu" id="burger"><i>≡</i></button>
+    <div class="links" id="links">
+      <a href="#approach">Approach</a>
+      <a href="#strategy">Strategy</a>
+      <a href="#process">Process</a>
+      <a href="notes.html">Notes</a>
+      <a href="#about">About</a>
+      <a href="#contact" class="cta">Inquire</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <span class="mark" aria-hidden="true"><img src="ac-mark.png" alt="" /></span>
+      <h1 class="wordmark metal">ATARAX CAPITAL</h1>
+      <div class="rule"></div>
+      <span class="eyebrow">Systematic Macro Investments</span>
+      <p class="lede">A private quantitative trading firm building uncorrelated, systematically validated strategies across global futures markets. Engineered for consistency, governed by risk.</p>
+      <div class="actions">
+        <a href="#contact" class="btn btn-metal">Inquire</a>
+        <a href="#approach" class="btn btn-ghost">Our approach →</a>
+      </div>
+    </div>
+    <a href="#approach" class="scrollcue" aria-label="Scroll to approach">↓</a>
+  </section>
+
+  <div class="strip">
+    <div class="wrap reveal">
+      <p><span class="key">a·ta·rax·i·a</span>&nbsp;&nbsp;&nbsp;a lucid calm, undisturbed by turbulence. We trade systems, not sentiment.</p>
+    </div>
+  </div>
+
+  <section class="block" id="approach">
+    <div class="wrap">
+      <div class="lab reveal"><span class="n">01</span><span class="t">Approach</span></div>
+      <h2 class="h-lead reveal">Discipline is the strategy.</h2>
+      <p class="sub reveal">Three principles govern every decision before any capital is committed.</p>
+      <div class="grid3 reveal">
+        <div class="cell">
+          <div class="ic">◇</div>
+          <h3>Evidence over intuition</h3>
+          <p>Every strategy must prove itself out-of-sample, across regimes it was never fitted to, before it is entrusted with capital.</p>
+        </div>
+        <div class="cell">
+          <div class="ic">◈</div>
+          <h3>Risk before return</h3>
+          <p>Stops, drawdown limits, position sizing and a kill-switch are designed first. Return is simply what remains after risk is controlled.</p>
+        </div>
+        <div class="cell">
+          <div class="ic">◆</div>
+          <h3>Composure by design</h3>
+          <p>Execution is fully automated and rules-based. Emotion is removed from the loop, so the system acts the same on every bar.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <main>
-    <section id="firm">
-      <div class="section-inner split">
-        <div>
-          <div class="section-label">The Firm</div>
-          <h2>Systematic thinking for complex markets.</h2>
-        </div>
-        <div>
-          <p class="lead">Atarax Capital studies the relationships between growth, inflation, liquidity, policy, and price behavior across global markets.</p>
-          <p class="body-copy">Our work is grounded in repeatable research, portfolio discipline, and a sober respect for uncertainty. We combine quantitative signals with macro context to identify opportunities while keeping risk management at the center of the investment process.</p>
-          <div class="metrics" aria-label="Firm attributes">
-            <div class="metric"><strong>01</strong><span>Systematic research process</span></div>
-            <div class="metric"><strong>02</strong><span>Global macro opportunity set</span></div>
-            <div class="metric"><strong>03</strong><span>Risk-first portfolio construction</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
+  <section class="block" id="strategy">
+    <div class="wrap">
+      <div class="lab reveal"><span class="n">02</span><span class="t">Strategy</span></div>
+      <h2 class="h-lead reveal">A portfolio, not a position.</h2>
+      <p class="sub reveal">We combine low-correlation systematic edges across liquid futures, spanning equity indices and metals, and size them by risk parity, so no single market or regime dictates the outcome. The whole is steadier than any part.</p>
+    </div>
+  </section>
 
-    <section id="focus">
-      <div class="section-inner">
-        <div class="section-label">Investment Focus</div>
-        <h2>Markets observed through signals, regimes, and discipline.</h2>
-        <div class="focus-grid">
-          <article class="focus-item">
-            <span class="number">01</span>
-            <div><h3>Rates</h3><p>Policy cycles, yield curves, real rates, and cross-market duration dynamics.</p></div>
-          </article>
-          <article class="focus-item">
-            <span class="number">02</span>
-            <div><h3>Currencies</h3><p>Relative growth, liquidity, carry, and capital flow conditions across major FX markets.</p></div>
-          </article>
-          <article class="focus-item">
-            <span class="number">03</span>
-            <div><h3>Equities</h3><p>Index-level exposures shaped by macro regimes, earnings cycles, and volatility structure.</p></div>
-          </article>
-          <article class="focus-item">
-            <span class="number">04</span>
-            <div><h3>Commodities</h3><p>Inflation, supply constraints, demand shifts, and collateral effects across real assets.</p></div>
-          </article>
-        </div>
+  <section class="block" id="process">
+    <div class="wrap">
+      <div class="lab reveal"><span class="n">03</span><span class="t">Process</span></div>
+      <h2 class="h-lead reveal">Institutional rigor, end to end.</h2>
+      <div class="proc reveal">
+        <div class="row"><span class="num">i</span><span class="name">Walk-forward validation</span><span class="desc">Parameters are re-optimized on the past and tested only on the unseen future.</span></div>
+        <div class="row"><span class="num">ii</span><span class="name">Out-of-sample testing</span><span class="desc">In-sample results are treated as optimistic until proven forward.</span></div>
+        <div class="row"><span class="num">iii</span><span class="name">Inter-market & regime filters</span><span class="desc">Trades are gated by cross-market context and volatility regime.</span></div>
+        <div class="row"><span class="num">iv</span><span class="name">Risk-parity allocation</span><span class="desc">Capital is balanced so each strategy contributes equal risk.</span></div>
+        <div class="row"><span class="num">v</span><span class="name">Automated, monitored execution</span><span class="desc">24/7 with alerts, daily reporting and a manual kill-switch.</span></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="system" id="system">
-      <div class="section-inner split">
-        <div>
-          <div class="section-label">Atarax Trading System</div>
-          <h2>A private automation stack for systematic futures research.</h2>
-        </div>
-        <div>
-          <p class="lead">Atarax Capital develops a modular Python-based trading system that turns discretionary market logic into a tested, rules-driven process.</p>
-          <p class="body-copy">The platform connects research, backtesting, risk controls, live monitoring, simulated execution, and operational alerts into one internal workflow. Strategy details, parameters, and performance data remain private by design.</p>
-          <div class="system-panel" aria-label="Atarax Trading System attributes">
-            <div class="system-copy">
-              <span class="system-kicker">Purpose</span>
-              <p>A proprietary operating framework for building, testing, and supervising systematic futures strategies with discipline.</p>
-            </div>
-            <div class="system-line">
-              <span>Research</span>
-              <span>Backtesting</span>
-              <span>Risk Control</span>
-              <span>Execution</span>
-            </div>
-          </div>
-        </div>
+  <section class="block stats">
+    <div class="wrap">
+      <div class="statgrid reveal">
+        <div class="stat"><div class="v">Global</div><div class="l">Futures markets</div></div>
+        <div class="stat"><div class="v">~2.6</div><div class="l">Out-of-sample Sharpe<br>(research)</div></div>
+        <div class="stat"><div class="v">Multi</div><div class="l">Uncorrelated strategies</div></div>
+        <div class="stat"><div class="v">24/7</div><div class="l">Automated &amp; monitored</div></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="principles" id="principles">
-      <div class="section-inner split">
-        <div>
-          <div class="section-label">Principles</div>
-          <h2>Calm process.<br>Clear risk.<br>Long memory.</h2>
-        </div>
-        <div class="principle-list">
-          <article class="principle"><h3>Repeatability</h3><p>Investment decisions should emerge from a process that can be tested, reviewed, and improved.</p></article>
-          <article class="principle"><h3>Humility</h3><p>Markets are adaptive. The portfolio must be designed for what can go wrong, not only what may go right.</p></article>
-          <article class="principle"><h3>Patience</h3><p>We prefer fewer decisions with stronger evidence over constant activity without edge.</p></article>
-        </div>
+  <section class="block" id="about">
+    <div class="wrap twocol">
+      <div class="about">
+        <div class="lab reveal"><span class="n">04</span><span class="t">About</span></div>
+        <h2 class="h-lead reveal" style="font-size:clamp(28px,4vw,44px)">Quantitative. Patient. Calm.</h2>
+        <p class="reveal">Atarax is named for ataraxia, a lucid calm that turbulence cannot reach. It is an independent systematic trading practice, established in 2025 and based in Paris.</p>
+        <p class="reveal">It exists to build a system good enough to compound capital on its own, refined to a craftsman's standard, so that in time it earns freedom of time, place, and attention.</p>
+        <p class="reveal">The method is deliberately unglamorous. Nothing is traded until it survives data it was never fitted to. Risk and cost are settled before a position exists, and execution is automated so no decision is left to the heat of the moment. The aim is not to predict markets, and not to win today, but to compound a small, protected edge with composure.</p>
       </div>
-    </section>
-
-    <section class="contact" id="contact">
-      <div class="section-inner">
-        <div class="section-label">Contact</div>
-        <div class="contact-box">
-          <div>
-            <h2>For investor inquiries.</h2>
-            <p class="body-copy">Please contact Atarax Capital for introductions, materials, or partnership conversations.</p>
-          </div>
-          <a class="email" href="mailto:contact@ataraxcapital.com">contact@ataraxcapital.com</a>
-        </div>
+      <div class="contact reveal" id="contact">
+        <h3>Inquiries</h3>
+        <div class="item"><div class="k">Email</div><div class="val"><a href="mailto:hello@ataraxcapital.com">hello@ataraxcapital.com</a></div></div>
+        <div class="item"><div class="k">Location</div><div class="val">Paris, France</div></div>
+        <div class="item"><div class="k">Status</div><div class="val">Private · By introduction</div></div>
+        <a href="mailto:hello@ataraxcapital.com" class="btn btn-metal" style="margin-top:30px">Get in touch</a>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
+</main>
 
-  <footer>
-    <span>© 2026 Atarax Capital. All rights reserved.</span>
-    <span>For Jiwon By Jiwon</span>
-  </footer>
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <span class="fb metal">ATARAX CAPITAL</span>
+      <span class="eyebrow">Established 2025 &nbsp;·&nbsp; Paris</span>
+    </div>
+    <p class="motto">For Jiwon, By Jiwon</p>
+    <p class="disc">Atarax Capital is a private systematic trading operation. Nothing on this site constitutes investment advice, research, or an offer or solicitation to buy or sell any financial instrument or to participate in any trading strategy. Figures shown are illustrative of internal research and do not represent actual client trading results. Trading futures involves substantial risk of loss. Past performance is not indicative of future results.</p>
+    <p class="copy">© 2025 Atarax Capital. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  var burger=document.getElementById('burger'),links=document.getElementById('links');
+  burger.addEventListener('click',function(){links.classList.toggle('open')});
+  links.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){links.classList.remove('open')})});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  var prog=document.getElementById('prog');
+  window.addEventListener('scroll',function(){var h=document.documentElement;var max=h.scrollHeight-h.clientHeight;prog.style.width=(max>0?(h.scrollTop/max*100):0)+'%'},{passive:true});
+</script>
 </body>
 </html>
